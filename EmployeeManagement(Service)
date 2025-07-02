@@ -1,0 +1,66 @@
+package Com.service;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import Com.entity.Employee;
+
+public class empService1 {
+	public static Connection c = null;
+	static {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			c = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys?user=root&password=Penchalaiah");
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public int saveEmp(Employee empmanagement) {
+		int no = 0;
+		String sql = "insert into empmanagement values(?,?,?,?,?)";
+		try {
+			PreparedStatement p = c.prepareStatement(sql);
+			p.setInt(1, empmanagement.getId());
+			p.setString(2, empmanagement.getName());
+			p.setInt(3, empmanagement.getAge());
+			p.setString(4, empmanagement.getName());
+			p.setDouble(5, empmanagement.getSalary());
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return no;
+	}
+	public List<Employee> getAll() 
+	{
+		List<Employee> l1=new ArrayList<Employee>();
+		String sql="SELECT * from empmanagement";
+		try {
+			Statement stmt=c.createStatement();
+			ResultSet rs=stmt.executeQuery(sql);
+			while(rs.next()) {
+				int id=rs.getInt(1);
+				String name=rs.getString(2);
+				int age= rs.getInt(3);
+				String email=rs.getString(4);
+				double salary=rs.getDouble(5);
+				l1.add(new Employee(id,name,age,email,salary));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return l1;
+	}
+
+}
