@@ -1,0 +1,60 @@
+package EmpDriver;
+
+import java.util.Scanner;
+import EmpService.EmpService;
+
+public class EmpDriver {
+
+	public static void main(String[] args) {
+		System.out.println("WELCOME TO EMPLOYEE MANAGEMENT SYSTEM");
+		System.out.println("MENU DETAILS");
+		System.out.println("Press 1 to register employee");
+		System.out.println("Press 2 to update employee");
+		System.out.println("Press 3 to delete employee");
+		System.out.println("Press 4 to fetch employee");
+		System.out.println("Press 5 to close application");
+
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter your choice:");
+		int choice = sc.nextInt();
+
+		EmpService e1 = new EmpService();
+		switch (choice) {
+		case 1:
+			int res1 = e1.save();
+			if (res1 != 0) {
+				System.out.println("Data saved!!!");
+			} else {
+				System.out.println("Data is not saved");
+			}
+			break;
+		case 2:
+			int res2 = e1.update();
+			if (res2 != 0) {
+				System.out.println("Data updated!!!");
+			} else {
+				System.out.println("Data is not updated");
+			}
+			break;
+		case 3:
+			int res3 = e1.delete();
+			if (res3 != 0) {
+				System.out.println("Data deleted!!!");
+			} else {
+				System.out.println("Data is not deleted");
+			}
+			break;
+		case 4:
+			e1.fetch();
+			break;
+		case 5:
+			e1.close();
+			break;
+		default:
+			System.out.println("Invalid choice");
+			break;
+		}
+
+		sc.close();
+	}
+}
